@@ -9,7 +9,7 @@
 *Versão 1.0*
 
 ```php
-use Prettus\Repository\Eloquent\Repository;
+use ElevenLab\Repository\Eloquent\Repository;
 
 class PostRepository extends Repository {
 
@@ -24,7 +24,7 @@ class PostRepository extends Repository {
 *Versão 2.0*
 
 ```php
-use Prettus\Repository\Eloquent\BaseRepository;
+use ElevenLab\Repository\Eloquent\BaseRepository;
 
 class PostRepository extends BaseRepository {
     

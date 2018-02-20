@@ -11,7 +11,7 @@ Some changes between version 2.0 and 2.1
 To use this package with Lumen , register the following service provider
 
 ```php
-$app->register(Prettus\Repository\Providers\LumenRepositoryServiceProvider::class);
+$app->register(ElevenLab\Repository\Providers\LumenRepositoryServiceProvider::class);
 ```
 
 ### Composer requirements

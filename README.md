@@ -62,30 +62,30 @@ ServiceProvider will be attached automatically
 
 #### Other
 
-In your `config/app.php` add `Prettus\Repository\Providers\RepositoryServiceProvider::class` to the end of the `providers` array:
+In your `config/app.php` add `ElevenLab\Repository\Providers\RepositoryServiceProvider::class` to the end of the `providers` array:
 
 ```php
 'providers' => [
     ...
-    Prettus\Repository\Providers\RepositoryServiceProvider::class,
+    ElevenLab\Repository\Providers\RepositoryServiceProvider::class,
 ],
 ```
 
 If Lumen
 
 ```php
-$app->register(Prettus\Repository\Providers\LumenRepositoryServiceProvider::class);
+$app->register(ElevenLab\Repository\Providers\LumenRepositoryServiceProvider::class);
 ```
 
 Publish Configuration
 
 ```shell
-php artisan vendor:publish --provider "Prettus\Repository\Providers\RepositoryServiceProvider"
+php artisan vendor:publish --provider "ElevenLab\Repository\Providers\RepositoryServiceProvider"
 ```
 
 ## Methods
 
-### Prettus\Repository\Contracts\RepositoryInterface
+### ElevenLab\Repository\Contracts\RepositoryInterface
 
 - all($columns = array('*'))
 - first($columns = array('*'))
@@ -112,7 +112,7 @@ php artisan vendor:publish --provider "Prettus\Repository\Providers\RepositorySe
 - skipPresenter($status = true);
 
 
-### Prettus\Repository\Contracts\RepositoryCriteriaInterface
+### ElevenLab\Repository\Contracts\RepositoryCriteriaInterface
 
 - pushCriteria($criteria)
 - popCriteria($criteria)
@@ -121,7 +121,7 @@ php artisan vendor:publish --provider "Prettus\Repository\Providers\RepositorySe
 - skipCriteria($status = true)
 - getFieldsSearchable()
 
-### Prettus\Repository\Contracts\CacheableInterface
+### ElevenLab\Repository\Contracts\CacheableInterface
 
 - setCacheRepository(CacheRepository $repository)
 - getCacheRepository()
@@ -129,20 +129,20 @@ php artisan vendor:publish --provider "Prettus\Repository\Providers\RepositorySe
 - getCacheMinutes()
 - skipCache($status = true)
 
-### Prettus\Repository\Contracts\PresenterInterface
+### ElevenLab\Repository\Contracts\PresenterInterface
 
 - present($data);
 
-### Prettus\Repository\Contracts\Presentable
+### ElevenLab\Repository\Contracts\Presentable
 
 - setPresenter(PresenterInterface $presenter);
 - presenter();
 
-### Prettus\Repository\Contracts\CriteriaInterface
+### ElevenLab\Repository\Contracts\CriteriaInterface
 
 - apply($model, RepositoryInterface $repository);
 
-### Prettus\Repository\Contracts\Transformable
+### ElevenLab\Repository\Contracts\Transformable
 
 - transform();
 
@@ -173,7 +173,7 @@ class Post extends Eloquent { // or Ardent, Or any other Model Class
 ```php
 namespace App;
 
-use Prettus\Repository\Eloquent\BaseRepository;
+use ElevenLab\Repository\Eloquent\BaseRepository;
 
 class PostRepository extends BaseRepository {
 
@@ -452,8 +452,8 @@ Criteria are a way to change the repository of the query by applying specific co
 
 ```php
 
-use Prettus\Repository\Contracts\RepositoryInterface;
-use Prettus\Repository\Contracts\CriteriaInterface;
+use ElevenLab\Repository\Contracts\RepositoryInterface;
+use ElevenLab\Repository\Contracts\CriteriaInterface;
 
 class MyCriteria implements CriteriaInterface {
 
@@ -505,7 +505,7 @@ $posts = $this->repository->getByCriteria(new MyCriteria());
 Setting the default Criteria in Repository
 
 ```php
-use Prettus\Repository\Eloquent\BaseRepository;
+use ElevenLab\Repository\Eloquent\BaseRepository;
 
 class PostRepository extends BaseRepository {
 
@@ -552,8 +552,8 @@ To use the Criteria in your repository, you can add a new criteria in the boot m
 #### Enabling in your Repository
 
 ```php
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
+use ElevenLab\Repository\Eloquent\BaseRepository;
+use ElevenLab\Repository\Criteria\RequestCriteria;
 
 
 class PostRepository extends BaseRepository {
@@ -567,7 +567,7 @@ class PostRepository extends BaseRepository {
     ];
 
     public function boot(){
-        $this->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $this->pushCriteria(app('ElevenLab\Repository\Criteria\RequestCriteria'));
         ...
     }
 
@@ -605,7 +605,7 @@ protected $fieldSearchable = [
 ```php
 	public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $this->repository->pushCriteria(app('ElevenLab\Repository\Criteria\RequestCriteria'));
         $posts = $this->repository->all();
 		...
     }
@@ -779,9 +779,9 @@ Add a layer of cache easily to your repository
 Implements the interface CacheableInterface and use CacheableRepository Trait.
 
 ```php
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Contracts\CacheableInterface;
-use Prettus\Repository\Traits\CacheableRepository;
+use ElevenLab\Repository\Eloquent\BaseRepository;
+use ElevenLab\Repository\Contracts\CacheableInterface;
+use ElevenLab\Repository\Traits\CacheableRepository;
 
 class PostRepository extends BaseRepository implements CacheableInterface {
 
@@ -843,9 +843,9 @@ You can change the cache settings in the file *config/repository.php* and also d
 It is possible to override these settings directly in the repository.
 
 ```php
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Contracts\CacheableInterface;
-use Prettus\Repository\Traits\CacheableRepository;
+use ElevenLab\Repository\Eloquent\BaseRepository;
+use ElevenLab\Repository\Contracts\CacheableInterface;
+use ElevenLab\Repository\Traits\CacheableRepository;
 
 class PostRepository extends BaseRepository implements CacheableInterface {
 
@@ -879,7 +879,7 @@ Easy validation with `prettus/laravel-validator`
 In the example below, we define some rules for both creation and edition
 
 ```php
-use \Prettus\Validator\LaravelValidator;
+use \ElevenLab\Validator\LaravelValidator;
 
 class PostValidator extends LaravelValidator {
 
@@ -895,8 +895,8 @@ class PostValidator extends LaravelValidator {
 To define specific rules, proceed as shown below:
 
 ```php
-use \Prettus\Validator\Contracts\ValidatorInterface;
-use \Prettus\Validator\LaravelValidator;
+use \ElevenLab\Validator\Contracts\ValidatorInterface;
+use \ElevenLab\Validator\LaravelValidator;
 
 class PostValidator extends LaravelValidator {
 
@@ -917,8 +917,8 @@ class PostValidator extends LaravelValidator {
 ##### Enabling Validator in your Repository
 
 ```php
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
+use ElevenLab\Repository\Eloquent\BaseRepository;
+use ElevenLab\Repository\Criteria\RequestCriteria;
 
 class PostRepository extends BaseRepository {
 
@@ -948,9 +948,9 @@ class PostRepository extends BaseRepository {
 Alternatively, instead of using a class to define its validation rules, you can set your rules directly into the rules repository property, it will have the same effect as a Validation class.
 
 ```php
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use Prettus\Validator\Contracts\ValidatorInterface;
+use ElevenLab\Repository\Eloquent\BaseRepository;
+use ElevenLab\Repository\Criteria\RequestCriteria;
+use ElevenLab\Validator\Contracts\ValidatorInterface;
 
 class PostRepository extends BaseRepository {
 
@@ -981,7 +981,7 @@ class PostRepository extends BaseRepository {
 }
 ```
 
-Validation is now ready. In case of a failure an exception will be given of the type: *Prettus\Validator\Exceptions\ValidatorException*
+Validation is now ready. In case of a failure an exception will be given of the type: *ElevenLab\Validator\Exceptions\ValidatorException*
 
 ### Presenters
 
@@ -1033,7 +1033,7 @@ The command will prompt you for creating a Transformer too if you haven't alread
 ###### Create a Presenter
 
 ```php
-use Prettus\Repository\Presenter\FractalPresenter;
+use ElevenLab\Repository\Presenter\FractalPresenter;
 
 class PostPresenter extends FractalPresenter {
 
@@ -1052,7 +1052,7 @@ class PostPresenter extends FractalPresenter {
 ###### Enabling in your Repository
 
 ```php
-use Prettus\Repository\Eloquent\BaseRepository;
+use ElevenLab\Repository\Eloquent\BaseRepository;
 
 class PostRepository extends BaseRepository {
 
@@ -1076,13 +1076,13 @@ $this->repository->setPresenter("App\\Presenter\\PostPresenter");
 If you recorded a presenter and sometime used the `skipPresenter()` method or simply you do not want your result is not changed automatically by the presenter.
 You can implement Presentable interface on your model so you will be able to present your model at any time. See below:
 
-In your model, implement the interface `Prettus\Repository\Contracts\Presentable` and `Prettus\Repository\Traits\PresentableTrait`
+In your model, implement the interface `ElevenLab\Repository\Contracts\Presentable` and `ElevenLab\Repository\Traits\PresentableTrait`
 
 ```php
 namespace App;
 
-use Prettus\Repository\Contracts\Presentable;
-use Prettus\Repository\Traits\PresentableTrait;
+use ElevenLab\Repository\Contracts\Presentable;
+use ElevenLab\Repository\Traits\PresentableTrait;
 
 class Post extends Eloquent implements Presentable {
 
@@ -1102,7 +1102,7 @@ There, now you can submit your Model individually, See an example:
 
 ```php
 $repository = app('App\PostRepository');
-$repository->setPresenter("Prettus\\Repository\\Presenter\\ModelFractalPresenter");
+$repository->setPresenter("ElevenLab\\Repository\\Presenter\\ModelFractalPresenter");
 
 //Getting the result transformed by the presenter directly in the search
 $post = $repository->find(1);
@@ -1122,7 +1122,7 @@ print_r( $post->presenter() ); //It produces an output as array
 You can skip the presenter at every visit and use it on demand directly into the model, for it set the `$skipPresenter` attribute to true in your repository:
 
 ```php
-use Prettus\Repository\Eloquent\BaseRepository;
+use ElevenLab\Repository\Eloquent\BaseRepository;
 
 class PostRepository extends BaseRepository {
 
@@ -1145,7 +1145,7 @@ class PostRepository extends BaseRepository {
 ```php
 namespace App;
 
-use Prettus\Repository\Contracts\Transformable;
+use ElevenLab\Repository\Contracts\Transformable;
 
 class Post extends Eloquent implements Transformable {
      ...
@@ -1165,10 +1165,10 @@ class Post extends Eloquent implements Transformable {
 
 ###### Enabling in your Repository
 
-`Prettus\Repository\Presenter\ModelFractalPresenter` is a Presenter default for Models implementing Transformable
+`ElevenLab\Repository\Presenter\ModelFractalPresenter` is a Presenter default for Models implementing Transformable
 
 ```php
-use Prettus\Repository\Eloquent\BaseRepository;
+use ElevenLab\Repository\Eloquent\BaseRepository;
 
 class PostRepository extends BaseRepository {
 
@@ -1176,7 +1176,7 @@ class PostRepository extends BaseRepository {
 
     public function presenter()
     {
-        return "Prettus\\Repository\\Presenter\\ModelFractalPresenter";
+        return "ElevenLab\\Repository\\Presenter\\ModelFractalPresenter";
     }
 }
 ```
@@ -1184,7 +1184,7 @@ class PostRepository extends BaseRepository {
 Or enable it in your controller with
 
 ```php
-$this->repository->setPresenter("Prettus\\Repository\\Presenter\\ModelFractalPresenter");
+$this->repository->setPresenter("ElevenLab\\Repository\\Presenter\\ModelFractalPresenter");
 ```
 
 ### Skip Presenter defined in the repository

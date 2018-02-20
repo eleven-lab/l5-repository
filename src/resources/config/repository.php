@@ -1,7 +1,7 @@
 <?php
 /*
 |--------------------------------------------------------------------------
-| Prettus Repository Config
+| ElevenLab Repository Config
 |--------------------------------------------------------------------------
 |
 |
@@ -169,7 +169,8 @@ return [
         */
         'acceptedConditions' => [
             '=',
-            'like'
+            'like',
+            'ilike'
         ],
         /*
         |--------------------------------------------------------------------------
@@ -199,8 +200,8 @@ return [
         |
         | - sortedBy : Sort
         |   Ex:
-        |   http://prettus.local/?search=lorem&orderBy=id&sortedBy=asc
-        |   http://prettus.local/?search=lorem&orderBy=id&sortedBy=desc
+        |   http://prettus.local/?search=lorem&orderBy=id&direction=asc
+        |   http://prettus.local/?search=lorem&orderBy=id&direction=desc
         |
         | - searchJoin: Specifies the search method (AND / OR), by default the
         |               application searches each parameter with OR
@@ -214,7 +215,7 @@ return [
             'searchFields' => 'searchFields',
             'filter'       => 'filter',
             'orderBy'      => 'orderBy',
-            'sortedBy'     => 'sortedBy',
+            'sortedBy'     => 'direction',
             'with'         => 'with',
             'searchJoin'   => 'searchJoin'
         ]
