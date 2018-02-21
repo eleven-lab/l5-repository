@@ -612,10 +612,13 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      * @param array $attributes
      *
      * @return mixed
-     * @throws RepositoryException
+     * @throws
      */
     public function create(array $attributes)
     {
+
+        $this->authorize('create', $this->model());
+
         if (!is_null($this->validator)) {
             // we should pass data that has been casts by the model
             // to make sure data type are same because validator may need to use
@@ -678,6 +681,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
             $this->skipPresenter(true);
 
             $model = $this->model->findOrFail($id);
+            $this->authorize('update', $model);
             if(!$this->skipsTransactions()) $model = $model->lockForUpdate();
             $model->fill($attributes);
             $model->save();
@@ -704,6 +708,8 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      */
     public function updateOrCreate(array $attributes, array $values = [])
     {
+
+        $this->authorize('create', $this->model());
 
         return $this->wrapInTransaction(function() use($attributes, $values){
 
@@ -752,6 +758,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
             $this->skipPresenter(true);
 
             $model = $this->find($id);
+            $this->authorize('delete', $model);
             $originalModel = clone $model;
             if(!$this->skipsTransactions()) $model = $model->lockForUpdate();
 
