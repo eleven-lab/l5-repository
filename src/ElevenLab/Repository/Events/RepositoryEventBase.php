@@ -1,6 +1,7 @@
 <?php
 namespace ElevenLab\Repository\Events;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use ElevenLab\Repository\Contracts\RepositoryInterface;
 
@@ -29,6 +30,11 @@ abstract class RepositoryEventBase
     protected $action;
 
     /**
+     * @var Authenticatable
+     */
+    protected $user;
+
+    /**
      * @param RepositoryInterface $repository
      * @param Model               $model
      */
@@ -36,6 +42,7 @@ abstract class RepositoryEventBase
     {
         $this->repository = $repository;
         $this->model = $model;
+        $this->user = \Auth::user();
     }
 
     /**
@@ -52,6 +59,14 @@ abstract class RepositoryEventBase
     public function getRepository()
     {
         return $this->repository;
+    }
+
+    /**
+     * @return Authenticatable
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 
     /**
