@@ -470,10 +470,11 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      * @param string $method
      *
      * @return mixed
-     * @throws RepositoryException
+     * @throws
      */
     public function paginate($limit = null, $columns = ['*'], $method = "paginate")
     {
+        $this->authorize('viewAll', $this->model());
         $this->applyCriteria();
         $this->applyScope();
         $limit = is_null($limit) ? config('repository.pagination.limit', 15) : $limit;
