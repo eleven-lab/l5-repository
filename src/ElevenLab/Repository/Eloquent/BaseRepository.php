@@ -681,6 +681,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
             $this->skipPresenter(true);
 
             $model = $this->model->findOrFail($id);
+            $originalModel = clone $model;
             $this->authorize('update', $model);
             if(!$this->skipsTransactions()) $model = $model->lockForUpdate();
             $model->fill($attributes);
@@ -689,7 +690,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
             $this->skipPresenter($temporarySkipPresenter);
             $this->resetModel();
 
-            event(new RepositoryEntityUpdated($this, $model));
+            event(new RepositoryEntityUpdated($this, $model, $originalModel));
 
             return $this->parserResult($model);
 
