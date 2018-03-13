@@ -25,7 +25,7 @@ trait AuthorizableRepository
     public function authorize($ability, $arguments = [])
     {
 
-        if(!config('repository.enabled', true)) return true;
+        if(!config('repository.auth.enabled', true)) return true;
 
         if($this->skipAuthorization) return true;
 
@@ -49,7 +49,7 @@ trait AuthorizableRepository
     public function authorizeForUser($user, $ability, $arguments = [])
     {
 
-        if(!config('repository.enabled', true)) return true;
+        if(!config('repository.auth.enabled', true)) return true;
 
         if($this->skipAuthorization) return true;
 
