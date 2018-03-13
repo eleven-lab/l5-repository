@@ -241,5 +241,9 @@ return [
             'provider'     => 'RepositoryServiceProvider',
             'criteria'     => 'Criteria'
         ]
+    ],
+
+    'auth' => [
+        'enabled' => true,
     ]
 ];
