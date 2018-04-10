@@ -681,11 +681,9 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
 
             $this->skipPresenter(true);
 
-            if(!$this->skipsTransactions()) {
-                $model = $this->model->findOrFail($id);
-            }else {
-                $model = $this->model->lockForUpdate()->findOrFail($id);
-            }
+            $model = $this->model->firstOrFail($id);
+            if(!$this->skipsTransactions()) $model->lockForUpdate();
+
             $originalModel = clone $model;
             $this->authorize('update', $model);
             $model->fill($attributes);
@@ -728,11 +726,10 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
 
             $this->skipPresenter(true);
 
-            if(!$this->skipsTransactions()) {
-                $model = $this->model->lockForUpdate()->updateOrCreate($attributes, $values);
-            }else {
-                $model = $this->model->updateOrCreate($attributes, $values);
-            }
+
+            if(!$this->skipsTransactions()) $this->model->lockForUpdate();
+
+            $model = $this->model->updateOrCreate($attributes, $values);
 
             $this->skipPresenter($temporarySkipPresenter);
             $this->resetModel();
@@ -765,7 +762,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
             $model = $this->find($id);
             $this->authorize('delete', $model);
             $originalModel = clone $model;
-            if(!$this->skipsTransactions()) $model = $model->lockForUpdate();
+            if(!$this->skipsTransactions()) $model->lockForUpdate();
 
             $this->skipPresenter($temporarySkipPresenter);
             $this->resetModel();
@@ -799,7 +796,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
             $this->skipPresenter(true);
 
             $this->applyConditions($where);
-            if(!$this->skipsTransactions()) $this->model = $this->model->lockForUpdate();
+            if(!$this->skipsTransactions()) $this->model->lockForUpdate();
 
             $deleted = $this->model->delete();
 
