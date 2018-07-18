@@ -681,7 +681,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
 
             $this->skipPresenter(true);
 
-            $model = $this->model->firstOrFail($id);
+            $model = $this->model->findOrFail($id);
             if(!$this->skipsTransactions()) $model->lockForUpdate();
 
             $originalModel = clone $model;
