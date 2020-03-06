@@ -454,7 +454,6 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
 
         $this->authorize('create', $this->model());
         $model = $this->model->firstOrCreate($attributes);
-        $this->authorize('view', $this->model());
         $this->skipPresenter($temporarySkipPresenter);
 
         $this->resetModel();
